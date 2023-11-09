@@ -1,0 +1,2 @@
+# replica
+shopify replica theme
