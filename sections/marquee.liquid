@@ -1,0 +1,217 @@
+{%- style -%}
+    .section-{{ section.id }}-padding {
+      padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+      padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+    }
+
+    @media screen and (min-width: 750px) {
+      .section-{{ section.id }}-padding {
+        padding-top: {{ section.settings.padding_top }}px;
+        padding-bottom: {{ section.settings.padding_bottom }}px;
+      }
+    }
+    .marquee {
+      display: flex;
+      overflow: hidden;
+      width: 100%;
+    }
+    .marquee .marquee--items {
+      display: flex;
+      align-items: center;
+      flex-shrink: 0;
+      will-change: transform;
+      animation-name: marquee;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      animation-play-state: running;
+    }
+    .marquee .marquee--items:hover {
+      animation-play-state: paused;
+    }
+    @keyframes marquee {
+      0% {
+        transform: translateX(0);
+      }
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+    .marquee .marquee--items h3 {
+    	padding-inline: 1.5em;
+    	position: relative;
+    	font-weight: bold;
+    	line-height: 1;
+    	color: rgba(var(--color-base-text), 0.6);
+    	margin-block: 10px;
+    }
+    .marquee .marquee--items h3::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 0;
+      height: 6px;
+      width: 6px;
+      background: rgba(var(--color-base-text), 0.3);;
+      border-radius: 10rem;
+      transform: translateY(-20%);
+    }
+    .marquee--item {
+      display: flex;
+      align-items: center;
+    }
+    .marquee--item img {
+      width: 20px;
+      height: 20px;
+      border-radius: 10rem;
+    }
+    .marquee--item span {
+      padding-inline: 1rem;
+    }
+    .marquee--item span {
+      font-size: 25px;
+      font-weight: 700;
+      color: #2d2d2d;
+  }
+{%- endstyle -%}
+
+<div class="marquee section-{{ section.id }}-padding color-{{ section.settings.color_scheme }} gradient">
+  <div
+    class="marquee--items"
+    data-times="{{ section.settings.marquee_repeat }}"
+    data-speed="{{ section.settings.marquee_speed }}"
+  >
+    {% for block in section.blocks %}
+      <h3 class="marquee--item">
+        {% if block.settings.left_image %}<img src="{{ block.settings.left_image | img_url: 'master' }}">{% endif %}
+        <span>{{ block.settings.text }}</span>
+        {% if block.settings.right_image %}<img src="{{ block.settings.right_image | img_url: 'master' }}">{% endif %}
+      </h3>
+    {% endfor %}
+  </div>
+</div>
+
+<script>
+      const toolMarquee = document.querySelector(".marquee--items");
+      const times = toolMarquee.getAttribute("data-times");
+      const marqueeDuration = toolMarquee.getAttribute("data-speed");
+      const allTools = toolMarquee.children;
+      const arr = Array.from(allTools);
+
+      for(let i=1; i < times; i++){
+        arr.push(...Array.from(allTools))
+      }
+      arr.forEach((tool) => {
+        toolMarquee.appendChild(tool.cloneNode(true));
+      });
+    
+      // toolMarquee.style.animationName = 'marquee';
+      toolMarquee.style.animationDuration = `${marqueeDuration}s`;
+</script>
+
+{% schema %}
+  {
+    "name": "Marquee Slider",
+    "class":"custom-bg",
+    "settings": [
+      {
+        "type": "select",
+        "id": "color_scheme",
+        "options": [
+          {
+            "value": "accent-1",
+            "label": "t:sections.all.colors.accent_1.label"
+          },
+          {
+            "value": "accent-2",
+            "label": "t:sections.all.colors.accent_2.label"
+          },
+          {
+            "value": "background-1",
+            "label": "t:sections.all.colors.background_1.label"
+          },
+          {
+            "value": "background-2",
+            "label": "t:sections.all.colors.background_2.label"
+          },
+          {
+            "value": "inverse",
+            "label": "t:sections.all.colors.inverse.label"
+          }
+        ],
+        "default": "background-1",
+        "label": "t:sections.all.colors.label"
+      },
+      {
+        "type": "range",
+        "id": "marquee_repeat",
+        "min": 1,
+        "max": 10,
+        "step": 1,
+        "label": "Repeat blocks to adjust blank space",
+        "default": 1
+      },
+      {
+        "type": "range",
+        "id": "marquee_speed",
+        "min": 5,
+        "max": 30,
+        "step": 5,
+        "unit": "sec",
+        "label": "Marquee Speed",
+        "default": 5
+      },
+      {
+        "type": "header",
+        "content": "t:sections.all.padding.section_padding_heading"
+      },
+      {
+        "type": "range",
+        "id": "padding_top",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_top",
+        "default": 36
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom",
+        "min": 0,
+        "max": 100,
+        "step": 4,
+        "unit": "px",
+        "label": "t:sections.all.padding.padding_bottom",
+        "default": 36
+      }
+    ],
+    "blocks" : [
+      {
+      "type" : "slide",
+      "name" : "Add Text",
+        "settings" : [
+            {
+              "type": "image_picker",
+              "id": "left_image",
+              "label": "Left Image"
+            },
+            {
+              "type": "text",
+              "id":"text",
+              "label":"Text"
+            },
+            {
+              "type": "image_picker",
+              "id": "right_image",
+              "label": "Right Image"
+            }
+        ]
+      }
+    ],
+    "presets" : [
+      {
+      "name" : "Marquee Slider"
+      }
+    ]
+}
+{% endschema %}

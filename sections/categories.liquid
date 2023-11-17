@@ -1,0 +1,119 @@
+{% stylesheet %}
+  .category__header {
+    text-align: center;
+  }
+  .category__list {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  .category__list-item {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    text-align: center;
+  }
+  .category__img {
+    position: relative;
+    padding-bottom: 100%;
+    width: 100%;
+    --ratio-percent: 100%;
+  }
+  .category__img img {
+    display: block;
+    max-width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+    right: 0;
+    bottom: 0;
+    aspect-ratio: unset;
+  }
+  .category__desc {
+    background: #F5F5F5;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 1rem;
+  }
+{% endstylesheet %}
+
+<div class="category page-width">
+  <div class="category__header">
+    <h2 class="category__title">Our Top Categories</h2>
+    <p class="category__sub-title">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+  </div>
+  <div class="category__grid">
+    <ul class="category__list">
+      <li class="category__list-item">
+        <div class="category__img">
+          <img
+            src="//polinas-potent-potions.myshopify.com/cdn/shop/files/potions-header.png?v=1650325393&amp;width=300"
+            alt=""
+            srcset="//polinas-potent-potions.myshopify.com/cdn/shop/files/potions-header.png?v=1650325393&amp;width=300 300w"
+            width="300"
+            height="173"
+            style="object-position:1.9231% 9.7917%;"
+          >
+        </div>
+        <div class="category__desc">
+          <h3 class="category__desc-title">Our Shoes Collection</h3>
+          <p class="category__desc-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <button>Shop Now</button>
+        </div>
+      </li>
+      <li class="category__list-item">
+        <div class="category__img category__img--full">
+          <img
+            src="//polinas-potent-potions.myshopify.com/cdn/shop/files/potions-header.png?v=1650325393&amp;width=300"
+            alt=""
+            srcset="//polinas-potent-potions.myshopify.com/cdn/shop/files/potions-header.png?v=1650325393&amp;width=300 300w"
+            width="300"
+            height="173"
+            style="object-position:1.9231% 9.7917%;"
+          >
+        </div>
+      </li>
+      <li class="category__list-item">
+        <div class="category__desc">
+          <h3 class="category__desc-title">Our Shoes Collection</h3>
+          <p class="category__desc-para">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+          <button>Shop Now</button>
+        </div>
+        <div class="category__img">
+          <img
+            src="//polinas-potent-potions.myshopify.com/cdn/shop/files/potions-header.png?v=1650325393&amp;width=300"
+            alt=""
+            srcset="//polinas-potent-potions.myshopify.com/cdn/shop/files/potions-header.png?v=1650325393&amp;width=300 300w"
+            width="300"
+            height="173"
+            style="object-position:1.9231% 9.7917%;"
+          >
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Top Categories",
+  "tag": "section",
+  "class":"section-category",
+  "settings": [],
+  "presets" : [
+  {
+    "name" : "Top Categories"
+    }
+  ]
+}
+{% endschema %}
